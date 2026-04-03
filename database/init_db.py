@@ -21,6 +21,7 @@ def create_table():
     role TEXT NOT NULL CHECK(role IN ('user', 'staff', 'admin'))
     );
     ''')  
+
     
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS tickets (
@@ -30,6 +31,8 @@ def create_table():
         title TEXT NOT NULL,
         description TEXT NOT NULL,
         status TEXT NOT NULL,
+        category TEXT NOT NULL,
+        attachments TEXT,
         priority TEXT NOT NULL,
         created_at TEXT NOT NULL,
         updated_at TEXT,
@@ -62,5 +65,33 @@ def create_table():
         date_purchased TEXT NOT NULL,
         assigned_to INTEGER,
         FOREIGN KEY (assigned_to) REFERENCES users(id)
+    );
+    ''')
+
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS ticket_responses (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ticket_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        message TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        message_read INTEGER NOT NULL DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (ticket_id) REFERENCES tickets(id)
+    );
+        
+    ''')
+
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS assets_issues (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        asset_name TEXT NOT NULL,
+        issue_description TEXT NOT NULL,
+        serial_number TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        location TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    
     );
     ''')

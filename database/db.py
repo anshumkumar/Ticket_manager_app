@@ -11,8 +11,15 @@ db_path = os.path.join(BASE_DIR, 'tickets.db')   #path to the tickets.db databas
 # function definition.
 def db_connection():   
     conn = sqlite3.connect(db_path) #connects to the database file.
-    conn.row_factory = sqlite3.Row    #
+    conn.row_factory = sqlite3.Row    
     return conn
 
 
 # ths file is just for the database connection.
+
+
+# ;;;;;;
+
+
+
+

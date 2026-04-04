@@ -1,0 +1,133 @@
+/* Creating the stylesheet for the login page */
+
+
+/* This is the default light theme */
+:root {
+    --background-colour: #eef2ff; 
+    --main-panel: #ffffff; 
+    --text-colour: #0a0f2d; 
+    --border-colour: #cfd4e6;
+    --accent-colour: #3b82f6;;
+}
+
+/* Dark theme, it can be applied by the user. */
+
+body[data-theme="dark"] {
+    --background-colour: #0a0f2d;       
+    --main-panel: #1a1333;     
+    --text-colour: #f5d76e;    
+    --border-colour: #2a2f4a;    
+    --accent-colour: #5bbcff;    
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--background-colour);
+    color: var(--text-colour);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+
+
+.login-centre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container-1 {
+    background-color: var(--main-panel);
+    border: 2px solid var(--border-colour);
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-container-1 h1 {
+    text-align: center;
+    color: var(--accent-colour);
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+.form-container-1 h2 {
+    text-align: center;
+    color: var(--text-colour);
+    margin-bottom: 30px;
+    font-size: 1.4rem;
+}
+
+.form-row-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-label-1 {
+    font-weight: bold;
+    color: var(--text-colour);
+}
+
+.form-input-1 {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-colour);
+    background-color: var(--background-colour);
+    color: var(--text-colour);
+    font-size: 0.95rem;
+}
+
+.form-input-1:focus {
+    border-color: var(--accent-colour);
+    outline: none;
+}
+
+.button-1 {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border: 2px solid transparent;
+    cursor: pointer;
+    background-color: var(--accent-colour);
+    color: #fff;
+    width: 100%;
+    transition: 0.2s ease;
+}
+
+.button-1:hover {
+    background-color: #fff;
+    color: var(--accent-colour);
+    border-color: var(--accent-colour);
+}
+
+p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+a {
+    color: var(--accent-colour);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.flash-error {
+    border: 2px solid #d9534f;
+    color: #d9534f;
+    padding: 12px;
+    margin-bottom: 20px;
+    background-color: var(--main-panel);
+}

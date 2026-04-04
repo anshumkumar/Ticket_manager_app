@@ -40,7 +40,9 @@ class User:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users WHERE id = ?", (id,))
         row = cursor.fetchone()
-        conn.close()
+        conn.close() 
+        # this is important because through the use of this id in the database, datbase will keep track of user activity.
+        # linked with users to tickets, activity log, etc.
 
         if row:
             return User(id=row[0], name=row[1], username=row[2], password=row[3], role=row[4])

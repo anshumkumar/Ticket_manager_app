@@ -3,6 +3,7 @@ from models.user import User
 from models.ticket import Ticket
 from datetime import datetime
 import traceback
+from database.db import db_connection
 
 app = Flask(__name__)
 app.secret_key = "akumar_secret_key"
@@ -80,6 +81,76 @@ def admin_dashboard():
         return redirect(url_for('login'))
     
     return render_template('dashboard_admin.html', user=session.get('name'))
+
+@app.route('/ticket/<int:ticket_id>')
+def view_ticket(ticket_id):
+    if 'user_id' not in session or session.get('role') != 'user':
+        return redirect(url_for('login'))
+    
+    # Get ticket from database
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM tickets WHERE id = ? AND user_id = ?", (ticket_id, session['user_id']))
+    ticket = cursor.fetchone()
+    conn.close()
+    
+    if not ticket:
+        return "Ticket not found", 404
+    
+    return render_template('view_ticket.html', ticket=ticket)
+
+
+
+@app.route('/submit-ticket', methods=['GET', 'POST'])
+def submit_ticket():
+    if 'user_id' not in session or session.get('role') != 'user':
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+        category = request.form.get('category')
+        priority = request.form.get('priority')
+        
+        # Create ticket object
+        ticket = Ticket(
+            ticket_id=None,
+            user_id=session['user_id'],
+            staff_id=None,
+            title=title,
+            description=description,
+            category=category,
+            priority=priority,
+            status='Open',
+            created_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            updated_at=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        )
+        
+        ticket.create_ticket()
+        
+        return redirect(url_for('user_dashboard'))
+    
+    return render_template('submit_ticket.html')
+
+@app.route('/ticket/<int:ticket_id>/cancel', methods=['POST'])
+def cancel_ticket(ticket_id):
+    if 'user_id' not in session or session.get('role') != 'user':
+        return redirect(url_for('login'))
+    
+
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_id FROM tickets WHERE id = ?", (ticket_id,))
+    ticket = cursor.fetchone()
+    conn.close()
+    
+    if not ticket or ticket[0] != session['user_id']:
+        return "Unauthorized", 403
+    
+    # Cancel the ticket
+    Ticket.cancel_ticket(ticket_id)
+    
+    return redirect(url_for('user_dashboard'))
 
 if __name__ == '__main__':
     app.run(debug=True)

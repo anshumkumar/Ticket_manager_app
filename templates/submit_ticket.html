@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Ticket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h1>Ticket Management</h1>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('user_dashboard') }}" class="nav-item">Dashboard</a>
+                <a href="{{ url_for('submit_ticket') }}" class="nav-item active">+ Submit a  Ticket</a>
+                <a href="{{ url_for('logout') }}" class="nav-item logout">Logout</a>
+            </nav>
+        </div>
+        
+        <div class="main-content">
+            <div class="dash-header">
+                <h1>Submit New Ticket</h1>
+            </div>
+            
+            <div class="form-container-1">
+                <form method="POST">
+                    <div class="form-row-1">
+                        <label class="form-label-1">Title:</label>
+                        <input type="text" name="title" class="form-input-1" required>
+                    </div>
+                    
+                    <div class="form-row-1">
+                        <label class="form-label-1">Description:</label>
+                        <textarea name="description" class="form-textarea-1" required></textarea>
+                    </div>
+                    
+                    <div class="form-row-1">
+                        <label class="form-label-1">Category:</label>
+                        <select name="category" class="form-select-1" required>
+                            <option value="">Select Category</option>
+                            <option value="Hardware Issue">Hardware Issue</option>
+                            <option value="Software Issue">Software Issue</option>
+                            <option value="Network / Connectivity">Network / Connectivity</option>
+                            <option value="System Maintenance">System Maintenance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row-1">
+                        <label class="form-label-1">Priority:</label>
+                        <select name="priority" class="form-select-1" required>
+                            <option value="">Select Priority</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="button-1">Submit Ticket</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

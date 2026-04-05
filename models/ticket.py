@@ -16,7 +16,7 @@ class Ticket:
         self.updated_at = updated_at 
     # mostly based on my uml diagram, if new features are added, I will update them.
 
-    @staticmethod
+
     def create_ticket(self):
         conn = db_connection()
         cursor = conn.cursor()
@@ -74,3 +74,12 @@ class Ticket:
         
         conn.commit()
         conn.close()
+
+    @staticmethod
+    def get_user_tickets(user_id):
+        conn = db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM tickets WHERE user_id = ?", (user_id,))
+        rows = cursor.fetchall()
+        conn.close()
+        return rows 

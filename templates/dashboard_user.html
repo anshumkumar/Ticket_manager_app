@@ -4,14 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-    <h1>Welcome, {{ user }}</h1>
-    <h2>The User Dashboard</h2>
-    
-    <p><a href="{{ url_for('logout') }}">Logout</a></p>
-    
-    <p>In progress.</p>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h1>Ticket Manager</h1>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('user_dashboard') }}" class="nav-item active">Dashboard</a>
+                <a href="{{ url_for('submit_ticket') }}" class="nav-item">+ Submit Ticket</a>
+                <a href="{{ url_for('logout') }}" class="nav-item logout">Logout</a>
+            </nav>
+        </div>
+        
+        <div class="main-content">
+            <div class="dash-header">
+                <h1>Welcome to the app {{ user }}</h1>
+            </div>
+            
+            <div class="ticket-table-container">
+                <h2>Your Tickets</h2>
+                
+                {% if tickets %}
+                    <table class="ticket-table-1">
+                        <thead>
+                            <tr>
+                                <th>#Ticket ID</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in tickets %}
+                                <tr>
+                                    <td>#{{ ticket[0] }}</td>
+                                    <td>{{ ticket[3] }}</td>
+                                    <td>{{ ticket[6] }}</td>
+                                    <td><span class="status-badge-1 status-{{ ticket[8]|lower }}">{{ ticket[8] }}</span></td>
+                                    <td>{{ ticket[5] }}</td>
+                                    <td>{{ ticket[9] }}</td>
+                                    <td><a href="{{ url_for('view_ticket', ticket_id=ticket[0]) }}">View</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No tickets found. <a href="{{ url_for('submit_ticket') }}">Submit one now</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>

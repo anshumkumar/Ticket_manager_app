@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Ticket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h1>Ticket Manager</h1>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('user_dashboard') }}" class="nav-item">Dashboard</a>
+                <a href="{{ url_for('submit_ticket') }}" class="nav-item">+ Submit Ticket</a>
+                <a href="{{ url_for('logout') }}" class="nav-item logout">Logout</a>
+            </nav>
+        </div>
+        
+        <div class="main-content">
+            <div class="dash-header">
+                <h1>Ticket #{{ ticket[0] }}</h1>
+                <a href="{{ url_for('user_dashboard') }}">Back to Dashboard</a>
+            </div>
+            
+            <div class="form-container-1">
+                <div class="form-row-1">
+                    <label class="form-label-1">Title:</label>
+                    <p>{{ ticket[3] }}</p>
+                </div>
+                
+                <div class="form-row-1">
+                    <label class="form-label-1">Description:</label>
+                    <p>{{ ticket[4] }}</p>
+                </div>
+                
+                <div class="form-row-1">
+                    <label class="form-label-1">Category:</label>
+                    <p>{{ ticket[6] }}</p>
+                </div>
+                
+                <div class="form-row-1">
+                    <label class="form-label-1">Priority:</label>
+                    <p><span class="status-badge-1 status-{{ ticket[8]|lower }}">{{ ticket[8] }}</span></p>
+                </div>
+                
+                <div class="form-row-1">
+                    <label class="form-label-1">Status:</label>
+                    <p>{{ ticket[5] }}</p>
+                </div>
+                
+                <div class="form-row-1">
+                    <label class="form-label-1">Created:</label>
+                    <p>{{ ticket[9] }}</p>
+                </div>
+                
+                <div class="form-row-1">
+                    <label class="form-label-1">Last Updated:</label>
+                    <p>{{ ticket[10] }}</p>
+                </div>
+                
+                {% if ticket[5] != 'Cancelled' %}
+                    <form method="POST" action="{{ url_for('cancel_ticket', ticket_id=ticket[0]) }}">
+                        <button type="submit" class="button-1" style="background-color: #d9534f; color: white;">Cancel Ticket</button>
+                    </form>
+                {% else %}
+                    <p style="color: #d9534f;">This ticket has been cancelled.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
